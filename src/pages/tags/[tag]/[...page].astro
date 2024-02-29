@@ -1,0 +1,53 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+import { getCollection } from "astro:content";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Pagination from '@components/Pagination.astro';
+import PostCard from '@components/PostCard.astro';
+import TagCard from "@components/TagCard.astro";
+
+export const getStaticPaths = (async ({ paginate }) =>  {
+  const allPosts = await getCollection("posts");
+  const sortedPosts = allPosts.sort((a, b) => {
+    return b.data.pubDate.getTime() - a.data.pubDate.getTime();
+  });
+
+  const postsByTag = sortedPosts.reduce((acc, post) => {
+    post.data.tags.forEach((tag: string) => {
+      if (!acc[tag]) acc[tag] = [];
+      acc[tag].push(post);
+    });
+    return acc;
+  }, {} as Record<string, typeof allPosts>);
+
+  return Object.entries(postsByTag).flatMap(([tag, posts]) => 
+    paginate(posts, {
+      params: { tag },
+      pageSize: import.meta.env.PAGE_SIZE
+    })
+  );
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+  
+const { page } = Astro.props;
+const params = Astro.params;
+---
+<BaseLayout title={params.tag}>
+  <TagCard tag={params.tag} style="font-size: 1.5rem; line-height:1.75rem"/>
+  
+  <section>
+    <ol class="mt-4">
+      {page.data.map((post) => 
+        <li><PostCard href={`/posts/${post.slug}/`} frontmatter={post.data}/></li>
+      )}
+    </ol>
+  </section>
+
+  <Pagination 
+    length={page.lastPage} 
+    currentPage={page.currentPage} 
+    prevUrl={page.url.prev} 
+    nextUrl={page.url.next}
+  />
+</BaseLayout>

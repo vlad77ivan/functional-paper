@@ -1,0 +1,15 @@
+---
+title: 'Functional Paper Theme'
+pubDate: 2024-02-29
+description: 'Quick overview and goals targeted during development'
+author: 'Vlad Ivan'
+image:
+    src: '/images/astro_custom_colors.png'
+    alt: 'Astro logo with Functional Paper accent colors'
+tags: ["astro", "blogging"]
+---
+Functional Paper is the name of the theme you are currently experiencing. It was built as an option for blogs using [Astro](https://astro.build) in the static site generator mode. For me Functional Paper means something simple that just gets things done.
+
+The theme was built with the goals of being modern looking, light on dependancies and feature-rich. This is my first webdev project so it was also used as a learning oppurtunity. We will break down the features by category in the other posts.
+
+By open sourcing the theme I hope it can be a good starting point for some amazing blogs. The source code is availbale at [functional-paper.git](https://github.com/vlad77ivan/functional-paper).

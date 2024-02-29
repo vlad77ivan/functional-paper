@@ -1,0 +1,66 @@
+---
+import '@styles/global.css';
+import type { Post } from "@content/config.ts";
+import Author from "@components/Author.astro";
+import TagCard from "@components/TagCard.astro";
+
+interface Props {
+  href: string;
+  frontmatter: Post;
+}
+
+const { href, frontmatter } = Astro.props;
+---
+
+<article class="post-card relative">
+  <a href={href} class="absolute inset-0 z-10" aria-hidden="true" aria-label="Post"></a>
+  <img src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-card-image">
+  <div class="h-48 flex flex-col justify-between">
+    <div class="z-20">
+      <h1 class="line-clamp-2">
+        <a href={href} class="post-card-title">{frontmatter.title}</a>
+      </h1>
+      <h2 class="post-card-date-author">{frontmatter.pubDate.toUTCString().slice(5,16)} | <Author name={frontmatter.author} /></h2>
+    </div>
+    <p class="post-card-description">{frontmatter.description}</p>
+    <ul class="post-card-tags z-20">
+      {frontmatter.tags.slice(0, import.meta.env.MAX_TAGS_DISPLAYED).map((tag: string) => (
+        <li class="flex"><TagCard tag={tag} /></li>
+      ))}
+    </ul>
+  </div>
+</article>
+<hr class="post-card-divider"></hr>
+
+<style>
+  .post-card {
+    @apply cursor-pointer h-52 flex gap-x-6 items-center pl-2 rounded-xl hover:bg-gray-500/10 hover:transition-all hover:duration-100;
+  }
+  .post-card-image {
+    @apply rounded-xl w-52 h-44 flex-shrink-0 object-cover;
+  }
+  .post-card-title {
+    @apply font-medium text-xl border-b border-custom-accent;
+  }
+  .post-card-date-author {
+    @apply font-thin;
+  }
+  .post-card-description {
+    @apply line-clamp-3;
+  }
+  .post-card-tags {
+    @apply flex flex-wrap;
+  }
+  .post-card-divider {
+    @apply my-4 h-px border-0 bg-custom-accent;
+  }
+
+  @media screen and (max-width: 636px) {
+    .post-card {
+      @apply gap-x-3;
+    }
+    .post-card-image {
+      @apply w-28 h-40;
+    }
+  }
+</style>

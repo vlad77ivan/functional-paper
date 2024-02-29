@@ -1,0 +1,94 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"
+---
+<BaseLayout title="Search">
+  <main>
+    <form class="px-20 mb-4">   
+      <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="search-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
+          </div>
+          <input 
+            type="search" 
+            id="search"
+            class="search-box" 
+            placeholder="Search" 
+            required
+            maxlength="64"
+          />
+      </div>
+    </form>
+    <section aria-label="Search Results">
+      <ul id="searchResults"></ul>
+    </section>
+  </main>
+</BaseLayout>
+
+<script type="module" is:inline>
+  const PAGEFIND_INSTANCE = await import("/pagefind/pagefind.js");
+
+  const search = document.querySelector("#search");
+  const resultsList = document.querySelector("#searchResults");
+
+  function updateDocumentTitle(search) {
+    document.title = search
+      ? `Search results for “${search}”`
+      : "Search the Blog";
+  }
+
+  function generateSearchList(results) {
+    return results
+      .map((r) => {
+        return `<div class="relative block group">
+          <article class="flex h-28 flex gap-x-6 items-center pl-2 rounded-xl hover:bg-gray-500/10 hover:transition-all hover:duration-100" role="link" tabindex="0">
+            <a href="${r.url}" class="absolute inset-0 z-10" aria-hidden="true"></a>
+            <img src="${r.meta.image}" alt="${r.meta.image_alt}" class="rounded-xl w-28 h-24 flex-shrink-0 object-cover">
+            <div class="h-[90%] flex flex-col justify-between">
+              <h1>
+                <a href="${r.url}" class="font-medium text-xl border-b border-custom-accent">${r.meta.title}</a>
+              </h1>
+              <p class="line-clamp-3">${r.excerpt}</p>
+            </div>
+          </article>
+        </div>
+        <hr class="my-4 h-px border-0 bg-custom-accent"></hr>`;
+      })
+      .join("");
+  }
+
+  async function fetchSearchResults(search) {
+    if (search.length === 0) {
+      resultsList.innerHTML = "";
+      return;
+    }
+
+    if (!PAGEFIND_INSTANCE) return;
+    const searchQuery = await PAGEFIND_INSTANCE.search(search);
+    const searchResult = await Promise.all(searchQuery.results.slice(0, 10).map(r => r.data())); // 5
+    resultsList.innerHTML =
+      searchResult.length > 0
+        ? generateSearchList(searchResult)
+        : "No results found…";
+  }
+
+  search.addEventListener("input", () => {
+    fetchSearchResults(search.value);
+    updateDocumentTitle(search.value);
+  });
+</script>
+
+<style>
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+  .search-icon {
+    @apply w-4 h-4 text-gray-500 dark:text-gray-400;
+  }
+  .search-box {
+    @apply focus:outline-none block w-full p-4 ps-10 text-sm rounded-lg border border-custom-accent bg-gray-300/20 focus:ring-custom-accent-3 focus:border-custom-accent-3 dark:bg-gray-700/50 dark:border-custom-accent dark:focus:ring-custom-accent-3 dark:focus:border-custom-accent-3;
+  }
+</style>

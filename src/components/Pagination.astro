@@ -1,0 +1,38 @@
+---
+interface Props {
+  length: number;
+  currentUrl?: string; // Optional
+  currentPage: number;
+  firstUrl?: string; // Optional
+  prevUrl: string | any;
+  nextUrl: string | any;
+  lastUrl?: string; // Optional
+}
+
+const { length, currentPage, prevUrl, nextUrl} = Astro.props;
+---
+<nav class="pagination-container">
+  <div class="pagination-previous">
+    {currentPage > 1 && (
+      <a href={prevUrl} class="under-hover">previous</a>
+    )}
+  </div>
+  <span>{currentPage} / {length}</span>
+  <div class="pagination-next">
+    {currentPage < length && (
+      <a href={nextUrl} class="under-hover">next</a>
+    )}
+  </div>
+</nav>
+
+<style>
+  .pagination-container {
+    @apply flex items-center justify-center gap-x-6 mt-4;
+  }
+  .pagination-previous {
+    @apply flex justify-end flex-1;
+  }
+  .pagination-next {
+    @apply flex justify-start flex-1;
+  }
+</style>

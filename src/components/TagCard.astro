@@ -1,0 +1,15 @@
+---
+interface Props {
+  tag: string;
+  style?: string;
+}
+
+const { tag, style="" } = Astro.props;
+---
+<a style={style} href={`/tags/${tag}`} class="tag-link">#{tag}</a>
+
+<style>
+  .tag-link {
+    @apply self-center rounded-md text-xs px-1 m-1 border border-custom-accent-2 bg-custom-accent-2/25 dark:bg-custom-accent-2/35 hover:bg-custom-accent-2/55 dark:hover:bg-custom-accent-2/75 transition-all duration-100;
+  }
+</style>
