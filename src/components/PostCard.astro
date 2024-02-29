@@ -16,7 +16,7 @@ const { href, frontmatter } = Astro.props;
 <article class="post-card relative">
   <a href={href} class="absolute inset-0 z-10" aria-label="Post"></a>
   <Image src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-card-image" width="128" height="128" />
-  <div class="h-48 flex flex-col justify-between">
+  <div class="post-card-data">
     <div class="z-20">
       <h1 class="line-clamp-2">
         <a href={href} class="post-card-title">{frontmatter.title}</a>
@@ -40,6 +40,9 @@ const { href, frontmatter } = Astro.props;
   .post-card-image {
     @apply rounded-xl w-52 h-44 flex-shrink-0 object-cover;
   }
+  .post-card-data {
+    @apply h-48 flex flex-col justify-between;
+  }
   .post-card-title {
     @apply font-medium text-xl border-b border-custom-accent;
   }
@@ -58,10 +61,13 @@ const { href, frontmatter } = Astro.props;
 
   @media screen and (max-width: 636px) {
     .post-card {
-      @apply gap-x-3;
+      @apply gap-x-3 h-60;
     }
     .post-card-image {
       @apply w-28 h-40;
+    }
+    .post-card-data {
+    @apply h-56;
     }
   }
 </style>

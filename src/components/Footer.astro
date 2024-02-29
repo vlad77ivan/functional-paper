@@ -101,15 +101,9 @@ const twitch = import.meta.env.SOCIAL_TWITCH
     @apply flex flex-col flex-shrink-0 mt-2 gap-y-1;
   }
   .footer-social {
-    @apply flex flex-wrap items-center gap-x-4 mt-2;
+    @apply flex flex-wrap items-center gap-x-4 mt-2 max-w-[40%];
   }
   .social-media-icon {
     @apply size-6 fill-black dark:fill-white;
-  }
-  
-  @media screen and (max-width: 636px) {
-    .social-media-icon {
-      @apply size-5;
-    }
   }
 </style>
