@@ -13,7 +13,7 @@ const { href, frontmatter } = Astro.props;
 ---
 
 <article class="post-card relative">
-  <a href={href} class="absolute inset-0 z-10" aria-hidden="true" aria-label="Post"></a>
+  <a href={href} class="absolute inset-0 z-10" aria-label="Post"></a>
   <img src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-card-image">
   <div class="h-48 flex flex-col justify-between">
     <div class="z-20">
