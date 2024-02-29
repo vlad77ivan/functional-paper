@@ -8,7 +8,7 @@ image:
     alt: 'Architecture'
 tags: ["astro", "architecture", "pagefind", "giscus"]
 ---
-I'll offer an overview of some of the architectural features of Functional Paper. This is not a configuration tutorial, just a FYI on what is available.
+I'll provide an overview of some of the architectural features of Functional Paper. This is not a configuration tutorial, just a FYI on what is available.
 
 ## Pagination
 Pagination is implemented in the [Blog](/blog) page because I am not a fan of infinite scrolling. The number of posts per page can be easily adjusted from the *.env* file so it will fit you exact preference.
