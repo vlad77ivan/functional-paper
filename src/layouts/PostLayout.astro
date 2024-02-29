@@ -11,7 +11,7 @@ interface Props {
 
 const { frontmatter } = Astro.props;
 ---
-<BaseLayout title={frontmatter.title}>
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
   <ul class="post-tags">
     {frontmatter.tags.map((tag: string) => (
       <li><TagCard tag={tag} /></li>
