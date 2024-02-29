@@ -1,5 +1,6 @@
 ---
 import '@styles/global.css';
+import { Image } from 'astro:assets';
 import type { Post } from "@content/config.ts";
 import Author from "@components/Author.astro";
 import TagCard from "@components/TagCard.astro";
@@ -14,7 +15,7 @@ const { href, frontmatter } = Astro.props;
 
 <article class="post-card relative">
   <a href={href} class="absolute inset-0 z-10" aria-label="Post"></a>
-  <img src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-card-image">
+  <Image src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-card-image" width="128" height="128" />
   <div class="h-48 flex flex-col justify-between">
     <div class="z-20">
       <h1 class="line-clamp-2">
