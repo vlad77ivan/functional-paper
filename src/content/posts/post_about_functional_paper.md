@@ -12,4 +12,4 @@ Functional Paper is the name of the theme you are currently experiencing. It was
 
 The theme was built with the goals of being modern looking, light on dependencies and feature-rich. This is my first webdev project so it was also used as a learning opportunity. We will break down the features by category in the other posts.
 
-By open sourcing the theme I hope it can be a good starting point for some amazing blogs. The source code is availbale at [functional-paper.git](https://github.com/vlad77ivan/functional-paper).
+By open sourcing the theme I hope it can be a good starting point for some amazing blogs. The source code is available at [functional-paper.git](https://github.com/vlad77ivan/functional-paper).
