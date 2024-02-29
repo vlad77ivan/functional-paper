@@ -7,7 +7,7 @@ export default {
         'custom-gray': '#0d1117',
 				'custom-white': '#f6f8fa',
 				'custom-accent': '#55d699',
-				'custom-accent-2': '#fac904',
+				'custom-accent-2': '#fbbd04',
 				'custom-accent-3': '#2f81f7',
       },
 			typography: (theme) => ({
