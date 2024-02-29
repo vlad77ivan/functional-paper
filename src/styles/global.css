@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-mono text-sm tracking-tight antialiased mx-auto max-w-5xl p-4 leading-normal bg-custom-white dark:bg-custom-gray dark:text-white;
+  }
+  html {
+    margin-left: calc(100vw - 100%);
+  }
+}
+
+@layer components {
+  .under-hover {
+    @apply border-y border-y-transparent border-b-black dark:border-b-white hover:text-custom-accent-3 hover:border-b-custom-accent-3 dark:hover:border-b-custom-accent-3 hover:transition-all hover:duration-100;
+  }
+}

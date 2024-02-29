@@ -1,0 +1,65 @@
+---
+import type { Post } from "@content/config.ts";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Author from "@components/Author.astro";
+import Comments from "@components/Comments.astro"
+import TagCard from "@components/TagCard.astro";
+
+interface Props {
+  frontmatter: Post;
+}
+
+const { frontmatter } = Astro.props;
+---
+<BaseLayout title={frontmatter.title}>
+  <ul class="post-tags">
+    {frontmatter.tags.map((tag: string) => (
+      <li><TagCard tag={tag} /></li>
+    ))}
+  </ul>
+
+  <article data-pagefind-body>
+    <h1 class="post-title">{frontmatter.title}</h1>
+    <p class="post-date-author">
+      {frontmatter.pubDate.toUTCString().slice(5,16)} | <Author name={frontmatter.author} />
+    </p>
+    <p class="post-description">
+      {frontmatter.description}
+    </p>
+
+    <figure class="post-image-container" data-pagefind-ignore>
+      <img src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-image-cover">
+      <figcaption class="post-image-description">{frontmatter.image.alt}</figcaption>
+    </figure>
+
+    <section>
+      <slot />
+    </section>
+  </article>
+
+  <Comments />
+</BaseLayout>
+
+<style>
+  .post-tags {
+    @apply flex flex-wrap;
+  }
+  .post-title {
+    @apply tracking-tighter font-semibold text-4xl mt-1;
+  }
+  .post-date-author {
+    @apply font-thin mt-1;
+  }
+  .post-description {
+    @apply my-4;
+  }
+  .post-image-container {
+    @apply flex flex-col mb-4;
+  }
+  .post-image-cover {
+    @apply self-center rounded-xl max-w-[80%] max-h-[32rem] flex-shrink-0 object-cover;
+  }
+  .post-image-description {
+    @apply self-center text-xs mt-2;
+  }
+</style>

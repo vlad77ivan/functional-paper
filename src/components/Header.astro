@@ -1,0 +1,84 @@
+---
+import Hamburger from "@components/Hamburger.astro";
+import Navigation from '@components/Navigation.astro';
+import ThemeToggle from '@components/ThemeToggle.astro';
+
+const siteTitle = import.meta.env.SITE_TITLE
+const siteTitleSecondary = import.meta.env.SITE_TITLE_SECONDARY
+const siteMotto = import.meta.env.SITE_MOTTO
+---
+<header class="mb-4">
+  <div class="flex justify-between gap-x-2 border-b border-custom-accent">
+    <a href="/" class="site-title flex items-center">
+      <span>{siteTitle}</span><span class="text-custom-accent-2">{siteTitleSecondary}</span>
+    </a>
+    <div class="desktop-menu">
+      <Navigation />
+      <span class="flex w-12"><ThemeToggle /></span>
+    </div>
+    <div class="mobile-menu">
+      <Hamburger />
+    </div>
+  </div>
+  <p class="text-xs">{siteMotto}</p>
+</header>
+
+<script is:inline>
+  const runAfterLoad =() => {
+    const themeToggle = document.querySelectorAll('.themeToggle');
+
+    const applyTheme = (theme) => {
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      // Dispatch a custom event whenever the theme changes
+      window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: theme } }));
+    };
+
+    const toggleTheme = () => {
+      const currentTheme = localStorage.getItem('theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', currentTheme);
+      applyTheme(currentTheme);
+    };
+
+    themeToggle.forEach(button => button.addEventListener('click', toggleTheme));
+
+    // Initial theme application
+    const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(storedTheme);
+  };
+
+  if(document.readyState !== 'loading') {
+    runAfterLoad();
+  }
+  else {
+    document.addEventListener('astro:page-load', () => {
+      runAfterLoad();
+    });
+  }
+
+  document.addEventListener('astro:after-swap', () => {
+    localStorage.theme === 'dark'
+    ? document.documentElement.classList.add("dark")
+    : document.documentElement.classList.add("light");
+  });
+</script>
+
+<style>
+  .site-title {
+    @apply tracking-tighter justify-self-start font-medium text-4xl;
+  }
+  .desktop-menu {
+    @apply flex;
+  }
+  .mobile-menu {
+    @apply hidden;
+  }
+
+  @media screen and (max-width: 636px) {  
+    .mobile-menu {
+      @apply flex;
+    }
+    .desktop-menu {
+      @apply hidden;
+    }
+  }
+</style>

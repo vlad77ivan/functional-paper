@@ -1,0 +1,21 @@
+---
+import NavLink from '@components/NavLink.astro';
+---
+<nav class="navigation-container">
+  <ul class="menu-links">
+    <li class="flex"><NavLink url={Astro.request.url} href="/about/" name="About"/></li>
+    <li class="flex"><NavLink url={Astro.request.url} href="/blog/" name="Blog"/></li>
+    <li class="flex"><NavLink url={Astro.request.url} href="/search/" name="Search"/></li>
+    <li class="flex"><NavLink url={Astro.request.url} href="/tags/" name="Tags"/></li>
+  </ul>
+</nav>
+
+<style>
+  .navigation-container {
+    @apply flex;
+  }
+
+  .menu-links {
+    @apply flex gap-x-2;
+  }
+</style>

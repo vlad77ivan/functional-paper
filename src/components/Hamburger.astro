@@ -1,0 +1,58 @@
+---
+import ThemeToggle from '@components/ThemeToggle.astro';
+---
+<label class="mobile-menu flex w-12 relative z-40 cursor-pointer" for="mobile-menu">
+  <input class="peer hidden" type="checkbox" id="mobile-menu" />
+  <div class="hamburger"></div>
+  <div class="fixed inset-0 z-40 hidden h-full w-full bg-black/50 backdrop-blur-sm peer-checked:block">&nbsp;</div>
+  <div class="fixed top-0 right-0 z-40 h-full w-full translate-x-full touch-none overflow-y-hidden overscroll-y-contain transition duration-100 peer-checked:translate-x-0">
+      <div class="float-right min-h-full w-[40%] bg-custom-white dark:bg-custom-gray px-6 pt-12 shadow-2xl">
+        <ul class="hamburger-links">
+          <li class="menu-option"><a href="/about/" class="menu-option-link">About</a></li>
+          <li class="menu-option"><a href="/blog/" class="menu-option-link">Blog</a></li>
+          <li class="menu-option"><a href="/search/" class="menu-option-link">Search</a></li>
+          <li class="menu-option"><a href="/tags/" class="menu-option-link">Tags</a></li>
+          <li class="flex h-8"><span><ThemeToggle /></span><li>
+        </ul>
+      </div>
+  </div>
+</label>
+
+<script>
+  document.addEventListener('astro:page-load', (_event) => {
+    const mobileMenuCheckbox = document.getElementById('mobile-menu');
+
+    if (mobileMenuCheckbox) {
+      mobileMenuCheckbox.addEventListener('change', function() {
+        const checkbox = this as HTMLInputElement;
+        if (checkbox.checked) {
+            document.body.style.overflowY = 'hidden';
+        } else {
+            document.body.style.overflowY = 'visible';
+        }
+      });
+    }
+  });
+</script>
+  
+
+<style>
+  .hamburger {
+    @apply mx-auto self-center relative z-50 block h-[2px] w-7 bg-custom-accent content-[''] before:absolute before:top-[-0.5rem] before:z-50 before:block before:h-full before:w-full before:bg-custom-accent before:transition-all before:duration-200 before:ease-out before:content-[''] after:absolute after:right-0 after:bottom-[-0.5rem] after:block after:h-full after:w-full after:bg-custom-accent after:transition-all after:duration-200 after:ease-out after:content-[''] peer-checked:bg-transparent before:peer-checked:top-0 before:peer-checked:w-full before:peer-checked:rotate-45 before:peer-checked:transform after:peer-checked:bottom-0 after:peer-checked:w-full after:peer-checked:-rotate-45 after:peer-checked:transform;
+  }
+  .hamburger-links {
+    @apply flex flex-col gap-y-4;
+  }
+  .menu-option {
+    @apply flex h-8 text-lg border-b border-custom-accent;
+  }
+  .menu-option-link {
+    @apply grow hover:text-custom-accent-3;
+  }
+
+  @media screen and (min-width: 636px) {  
+    .mobile-menu {
+      @apply hidden;
+    }
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  url: string;
+  href: string;
+  name: string;
+}
+
+const { url, href, name } = Astro.props;
+---
+<div class={url.endsWith(href)  ? 'nav-option active' : 'nav-option'}>
+  <a href={href} class="flex flex-col h-full justify-center">{name}</a>
+</div>
+
+<style>
+  .nav-option {
+    @apply flex h-full justify-center items-center w-12 border-b-2 border-t-2 border-transparent hover:border-b-custom-accent hover:transition-all hover:duration-100;
+  }
+  .nav-option.active {
+    @apply border-b-custom-accent;
+  }
+</style>

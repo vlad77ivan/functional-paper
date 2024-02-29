@@ -1,0 +1,90 @@
+---
+import type { Post } from "@content/config.ts";
+import Author from "@components/Author.astro";
+import TagCard from "@components/TagCard.astro";
+
+interface Props {
+  href: string;
+  frontmatter: Post;
+}
+
+const { href, frontmatter } = Astro.props;
+---
+
+<article class="latest-post-container relative">
+  <a href={href} class="absolute inset-0 z-10" aria-hidden="true" aria-label="Latest Post"></a>
+  <img src={frontmatter.image.src} alt={frontmatter.image.alt} class="latest-post-image">
+  <div class="latest-post-metadata-containder">
+    <div class="latest-post-date-author z-20">
+      <h2 class="font-thin">{frontmatter.pubDate.toUTCString().slice(5,16)}</h2>
+      <span class="date-author-divider">|</span>
+      <h2 class="font-thin"><Author name={frontmatter.author} /></h2>
+    </div>
+
+    <h1 class="latest-post-title-container z-20">
+      <a href={href}  class="latest-post-title">{frontmatter.title}</a>
+    </h1>
+  </div>
+
+  <p class="latest-post-description">{frontmatter.description}</p>
+  
+  <ul class="latest-post-tags z-20">
+    {frontmatter.tags.slice(0, import.meta.env.MAX_TAGS_DISPLAYED).map((tag: string) => (
+      <li class="flex"><TagCard tag={tag} /></li>
+    ))}
+  </ul>
+</article>
+
+<style>
+  .latest-post-container {
+    @apply cursor-pointer flex flex-col w-full rounded-xl px-14 pb-4 pt-6 mb-4 items-center hover:bg-gray-500/10 hover:transition-all hover:duration-100;
+  }
+  .latest-post-image {
+    @apply self-center rounded-xl max-w-[60%] max-h-[20rem] object-cover;
+  }
+  .latest-post-metadata-containder {
+    @apply flex my-3;
+  }
+  .date-author-divider {
+    @apply hidden;
+  }
+  .latest-post-date-author {
+    @apply self-center flex-shrink-0 items-start;
+  }
+  .latest-post-title-container {
+    @apply border-l border-l-custom-accent ml-2 pl-2 py-1 border-b border-b-custom-accent;
+  }
+  .latest-post-title {
+    @apply font-medium tracking-tighter text-4xl;
+  }
+  .latest-post-description {
+    @apply line-clamp-3;
+  }
+  .latest-post-tags {
+    @apply flex flex-wrap mt-2;
+  }
+
+  @media screen and (max-width: 636px) { 
+    .latest-post-container {
+      @apply px-1;
+    } 
+    .latest-post-image {
+      @apply self-center rounded-xl max-w-[80%] h-[16rem] object-cover;
+    }
+    .latest-post-metadata-containder {
+      @apply flex-col-reverse mb-2;
+    }
+    .latest-post-date-author {
+      @apply flex gap-x-2 mt-1;
+    }
+    .date-author-divider {
+      @apply flex;
+    }
+    .latest-post-title {
+      @apply text-2xl;
+    }
+    .latest-post-title-container {
+      @apply ml-0;
+  }
+  }
+</style>

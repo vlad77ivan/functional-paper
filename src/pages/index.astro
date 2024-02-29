@@ -1,16 +1,81 @@
 ---
+import { getCollection} from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import LatestCard from '@components/LatestCard.astro';
+import PostCard from '@components/PostCard.astro';
+import TagCard from "@components/TagCard.astro";
 
+const allPosts = await getCollection('posts');
+const allTagsFlat = allPosts.flatMap((post) => post.data.tags);
+
+const tagOccurrences = allTagsFlat.reduce((acc, tag) => {
+  acc[tag] = (acc[tag] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const tags = Object.keys(tagOccurrences);
+
+const sortedPosts = allPosts.sort((a, b) => {
+	// Sort in descending order
+  return b.data.pubDate.getTime() - a.data.pubDate.getTime();
+});
+
+const latestPost = sortedPosts[0]
+const recentPosts = sortedPosts.slice(1, import.meta.env.PAGE_SIZE);
+
+const sortTagsByOccurrences = (tags: string[])  => {
+  return tags.sort((a, b) => {
+    // Sort in descending order
+    return tagOccurrences[b] - tagOccurrences[a];
+  });
+}
+const sortedTags = sortTagsByOccurrences(tags).slice(0, import.meta.env.MAX_TAGS_DISPLAYED);
 ---
+<BaseLayout>
+	<section>
+		<LatestCard href={`/posts/${latestPost.slug}/`} frontmatter={latestPost.data}/>
+	</section>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+	<section>
+		<h1 class="section-title">Frequent tags</h1>
+		<ol class="frequent-tags-container">
+			{sortedTags.map((tag) => (
+				<li class="flex">
+					<TagCard tag={tag} style="font-size: 1.25rem; line-height:1.5rem"/>
+				</li>
+			))}
+		</ol>
+	</section>
+	
+	<section>
+		<h1 class="section-title">Recent posts</h1>
+		<ol>
+			{recentPosts.map((post) => 
+				<li><PostCard href={`/posts/${post.slug}/`} frontmatter={post.data}/></li>
+			)}
+		</ol>
+	</section>
+
+	<nav class="more-posts-nav">
+		<a href=`/blog/${allPosts.length > import.meta.env.PAGE_SIZE ? "2" : ""}` class="under-hover">more posts</a>
+	</nav>
+
+</BaseLayout>
+
+<style>
+	.section-title {
+		@apply text-4xl mb-2;
+	}
+	.frequent-tags-container {
+		@apply flex flex-wrap px-2 mb-6 gap-x-2 justify-center line-clamp-2;
+	}
+	.more-posts-nav {
+		@apply flex items-center justify-center mt-4;
+	}
+
+	@media screen and (max-width: 636px) {
+		.frequent-tags-container {
+			@apply justify-start;
+		}
+	}
+</style>

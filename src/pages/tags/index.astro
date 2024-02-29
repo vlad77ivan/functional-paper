@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import TagCard from "@components/TagCard.astro";
+
+const allPosts = await getCollection("posts");
+const allTagsFlat = allPosts.flatMap((post) => post.data.tags);
+
+const tagOccurrences = allTagsFlat.reduce((acc, tag) => {
+  acc[tag] = (acc[tag] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const tags = Object.keys(tagOccurrences);
+
+const computeSize = (occurrences: number) => Math.max(Math.log10(occurrences), 0.75);
+---
+<BaseLayout title="Tags">
+  <ul class="tags-container">
+    {tags.sort().map((tag) => (
+      <li class="flex">
+        <TagCard 
+          tag={tag} 
+          style={`
+            font-size: ${computeSize(tagOccurrences[tag])}rem; 
+            line-height: ${computeSize(tagOccurrences[tag]) * 1.5}em;
+          `}
+          />
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .tags-container {
+    @apply flex flex-wrap gap-x-4;
+  }
+</style>

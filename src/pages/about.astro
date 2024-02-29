@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+<BaseLayout title="About">
+  <article class="about-container" aria-label="About me">
+    <div class="size-[30%] overflow-hidden rounded-full flex-shrink-0 float-right">
+      <img src="/images/capy.png" alt="Pofile photo" class="object-cover w-full h-full">
+    </div>
+    <h1 class="mb-4 text-2xl">Hello, visitor!</h1>
+    <p>
+      I'm Vlad and you are on the Demo for the 
+      <a href="https://github.com/vlad77ivan/functional-paper" class="under-hover">
+      Functional Paper</a> theme for Astro.
+    </p>
+    <br/>
+    <p>
+      On this page you should say a few things about you and your motivation for a having a website.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .about-container {
+    @apply container mx-auto;
+  }
+</style>

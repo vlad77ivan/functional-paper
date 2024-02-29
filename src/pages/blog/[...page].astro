@@ -1,0 +1,34 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Pagination from '@components/Pagination.astro';
+import PostCard from '@components/PostCard.astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection('posts');
+  const sortedPosts = posts.sort((a, b) => {
+    return b.data.pubDate.getTime() - a.data.pubDate.getTime();
+  });
+  return paginate(sortedPosts, { pageSize: import.meta.env.PAGE_SIZE });
+}) satisfies GetStaticPaths;
+
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { page } = Astro.props;
+---
+<BaseLayout title="Blog">
+  <ol>
+    {page.data.map((post) => 
+      <li><PostCard href={`/posts/${post.slug}/`} frontmatter={post.data}/></li>
+    )}
+  </ol>
+
+  <Pagination 
+    length={page.lastPage}
+    currentPage={page.currentPage}
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+  />
+</BaseLayout>

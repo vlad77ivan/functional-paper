@@ -1,0 +1,65 @@
+---
+const giscusApp = import.meta.env.GISCUS_APP
+const giscusDataRepo = import.meta.env.GISCUS_DATA_REPO
+const giscusRepoId = import.meta.env.GISCUS_REPO_ID
+const giscusDataCategory = import.meta.env.GISCUS_DATA_CATEGORY
+const giscusDataCategoryId = import.meta.env.GISCUS_DATA_CATEGORY_ID
+---
+<div id="giscus-container" class="mt-2"></div>
+
+<script is:inline define:vars={{ giscusApp, giscusDataRepo, giscusRepoId, giscusDataCategory, giscusDataCategoryId }}>
+  // Function to determine the current theme
+  function getTheme() {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    }
+    return 'light';
+  }
+
+  // Function to create and append the Giscus script
+  function loadGiscus(theme) {
+    const giscusScript = document.createElement('script');
+    giscusScript.src = giscusApp;
+    giscusScript.setAttribute('data-repo', giscusDataRepo);
+    giscusScript.setAttribute('data-repo-id', giscusRepoId);
+    giscusScript.setAttribute('data-category', giscusDataCategory);
+    giscusScript.setAttribute('data-category-id', giscusDataCategoryId);
+    giscusScript.setAttribute('data-mapping', "title");
+    giscusScript.setAttribute('data-strict', "0");
+    giscusScript.setAttribute('data-reactions-enabled', "1");
+    giscusScript.setAttribute('data-emit-metadata', "0");
+    giscusScript.setAttribute('data-input-position', "top");
+    giscusScript.setAttribute('data-theme', `${theme}`);
+    giscusScript.setAttribute('data-lang', "en");
+    giscusScript.setAttribute('data-loading', "lazy");
+    giscusScript.async = true;
+    giscusScript.crossOrigin = "anonymous";
+
+    // Target the specific container instead of document.body
+    const container = document.getElementById('giscus-container');
+    if (container) {
+      container.innerHTML = ''; // Clear existing content
+      container.appendChild(giscusScript);
+    }
+  }
+
+  // Load Giscus with the current theme at page load
+  document.addEventListener('astro:page-load', () => {
+    const theme = getTheme();
+    loadGiscus(theme);
+  });
+
+  function updateGiscusTheme(theme) {
+    // Assuming the container's ID is "giscus-container"
+    const container = document.getElementById('giscus-container');
+    if (container) {
+      container.innerHTML = ''; // Clear the container
+      loadGiscus(theme); // Reload Giscus with the new theme
+    }
+  }
+
+  window.addEventListener('themeChanged', (event) => {
+    const newTheme = event.detail.theme;
+    updateGiscusTheme(newTheme); // Update Giscus with the new theme
+  });
+</script>
