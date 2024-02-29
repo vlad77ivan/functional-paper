@@ -95,10 +95,10 @@ const twitch = import.meta.env.SOCIAL_TWITCH
 
 <style>
   .footer-wrapper {
-    @apply flex items-center px-2 pb-6 justify-between mt-4 text-xs border-t border-custom-accent;
+    @apply flex items-center px-2 pb-6 justify-between gap-x-2 mt-4 text-xs border-t border-custom-accent;
   }
   .footer-info {
-    @apply flex flex-col mt-2 gap-y-1;
+    @apply flex flex-col flex-shrink-0 mt-2 gap-y-1;
   }
   .footer-social {
     @apply flex flex-wrap items-center gap-x-4 mt-2;
@@ -109,7 +109,7 @@ const twitch = import.meta.env.SOCIAL_TWITCH
   
   @media screen and (max-width: 636px) {
     .social-media-icon {
-      @apply size-4;
+      @apply size-5;
     }
   }
 </style>
