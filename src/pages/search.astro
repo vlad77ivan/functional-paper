@@ -44,10 +44,10 @@ import BaseLayout from "@layouts/BaseLayout.astro"
         return `<div class="relative block group">
           <article class="flex h-28 flex gap-x-6 items-center pl-2 rounded-xl hover:bg-gray-500/10 hover:transition-all hover:duration-100" role="link" tabindex="0">
             <a href="${r.url}" class="absolute inset-0 z-10" aria-hidden="true"></a>
-            <img src="${r.meta.image}" alt="${r.meta.image_alt}" class="rounded-xl w-28 h-24 flex-shrink-0 object-cover">
-            <div class="h-[90%] flex flex-col justify-between">
-              <h1>
-                <a href="${r.url}" class="font-medium text-xl border-b border-custom-accent">${r.meta.title}</a>
+            <img src="${r.meta.image}" alt="${r.meta.image_alt}" class="rounded-xl w-24 h-24 flex-shrink-0 object-cover">
+            <div class="h-[90%] flex flex-col justify-center">
+              <h1 class="line-clamp-1">
+                <a href="${r.url}" class="font-medium text-lg border-b border-custom-accent">${r.meta.title}</a>
               </h1>
               <p class="line-clamp-3">${r.excerpt}</p>
             </div>
