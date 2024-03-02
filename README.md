@@ -12,3 +12,10 @@ A blog theme for your Astro SSG project
 + RSS feed
 + Sitemap
 + robots.txt
+
+## Use the theme
+To start a new AStro project using this theme run the following command:
+```bash
+npm create astro@latest -- --template vlad77ivan/functional-paper
+```
+

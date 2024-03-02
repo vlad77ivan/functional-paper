@@ -31,16 +31,8 @@ export default {
                 color: theme('colors.custom-accent-3'), // Hover state color
               },
             },
-						img: {
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              maxWidth: '80%', // Ensures the image is responsive and does not overflow its container
-              maxHeight: '32rem', // Set a maximum height for images; adjust as needed
-							borderRadius: '0.75rem', // Add rounded corners to images. Adjust as needed.
-            },
 						figcaption: {
 							color: theme('colors.black'),
-							textAlign: 'center', // Center align figcaption text
 						},
           },
         },
