@@ -14,7 +14,15 @@ const { href, frontmatter } = Astro.props;
 
 <article class="latest-post-container relative">
   <a href={href} class="absolute inset-0 z-10" aria-label="Latest Post"></a>
-  <Image src={frontmatter.image.src} alt={frontmatter.image.alt} class="latest-post-image" format="avif" quality="mid"/>
+  <Image 
+    src={frontmatter.image.src} 
+    alt={frontmatter.image.alt} 
+    class="latest-post-image" 
+    widths={[240, 540, 720, frontmatter.image.src.width]}
+    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${frontmatter.image.src.width}px`}
+    format="avif" 
+    quality="mid"
+  />
   <div class="latest-post-metadata-containder">
     <div class="latest-post-date-author z-20">
       <h2 class="font-thin">{frontmatter.pubDate.toUTCString().slice(5,16)}</h2>
