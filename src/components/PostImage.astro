@@ -15,7 +15,16 @@ const { src, alt } = Astro.props;
     typeof src === 'string' ? (
       <img src={src} alt={alt} class="post-image" data-pagefind-ignore/>
     ) : (
-      <Image src={src} alt={alt} class="post-image" format="avif" quality="mid" data-pagefind-ignore/>
+      <Image 
+        src={src} 
+        alt={alt} 
+        class="post-image" 
+        widths={[240, 540, 720, src.width]}
+        sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${src.width}px`}
+        format="avif" 
+        quality="mid" 
+        data-pagefind-ignore
+      />
     )
   }
   <figcaption class="post-image-caption">{alt}</figcaption>
