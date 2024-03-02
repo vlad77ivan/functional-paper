@@ -1,14 +1,14 @@
 // Import utilities from `astro:content`
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection, type ImageFunction } from "astro:content";
 
 // Define a `type` and `schema` for each collection
-const postsCollectionSchema = z.object({
+const postsCollectionSchema = (image: ImageFunction) => z.object({
   title: z.string(),
   pubDate: z.date(),
   description: z.string(),
   author: z.string(),
   image: z.object({
-    src: z.string(),
+    src: image(),
     alt: z.string()
   }),
   tags: z.array(z.string())
@@ -16,11 +16,11 @@ const postsCollectionSchema = z.object({
 
 const postsCollection = defineCollection({
     type: 'content',
-    schema: postsCollectionSchema,
+    schema:({image}) => postsCollectionSchema(image),
 });
 
 // Use `.infer` to generate a TypeScript type from the Zod schema
-type Post = z.infer<typeof postsCollectionSchema>;
+type Post = z.infer<ReturnType<typeof postsCollectionSchema>>;
 
 // Export a single `collections` object to register your collection(s)
 export const collections = {

@@ -1,10 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
+import profileImage from '@images/capy.png';
 ---
 <BaseLayout title="About">
   <article class="about-container" aria-label="About me">
     <div class="size-[30%] overflow-hidden rounded-full flex-shrink-0 float-right">
-      <img src="/images/capy.png" alt="Pofile photo" class="object-cover w-full h-full">
+      <Image src={profileImage} alt="Pofile photo" class="object-cover w-full h-full" format="avif" quality="mid"/>
     </div>
     <h1 class="mb-4 text-2xl">Hello, visitor!</h1>
     <p>

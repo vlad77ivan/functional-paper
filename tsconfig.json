@@ -11,6 +11,7 @@
       "@styles/*": ["src/styles/*"],
       "@content/*": ["src/content/*"],
       "@scripts/*": ["src/scripts/*"],
+      "@images/*": ["src/assets/images/*"],
     }
   },
   "include": ["src/"],
