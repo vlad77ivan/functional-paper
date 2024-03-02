@@ -15,7 +15,7 @@ const { href, frontmatter } = Astro.props;
 
 <article class="post-card relative">
   <a href={href} class="absolute inset-0 z-10" aria-label="Post"></a>
-  <Image src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-card-image" width="128" height="128" />
+  <Image src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-card-image" format="avif" quality="mid"/>
   <div class="post-card-data">
     <div class="z-20">
       <h1 class="line-clamp-2">
@@ -59,7 +59,7 @@ const { href, frontmatter } = Astro.props;
     @apply my-4 h-px border-0 bg-custom-accent;
   }
 
-  @media screen and (max-width: 636px) {
+  @media screen and (max-width: 720px) {
     .post-card {
       @apply gap-x-3 h-60;
     }

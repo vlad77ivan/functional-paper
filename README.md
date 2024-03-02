@@ -18,3 +18,9 @@ A blog theme for your Astro SSG project
 [100% Mobile](https://pagespeed.web.dev/analysis/https-functional-paper-vercel-app/5z5cp3k5ib?form_factor=mobile)
 <br/>
 [100% Desktop](https://pagespeed.web.dev/analysis/https-functional-paper-vercel-app/5z5cp3k5ib?form_factor=desktop)
+
+## Use the theme
+To start a new AStro project using this theme run the following command:
+```bash
+npm create astro@latest -- --template vlad77ivan/functional-paper
+```

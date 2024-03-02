@@ -1,5 +1,6 @@
 ---
 import type { Post } from "@content/config.ts";
+import { Image } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Author from "@components/Author.astro";
 import Comments from "@components/Comments.astro"
@@ -27,8 +28,8 @@ const { frontmatter } = Astro.props;
       {frontmatter.description}
     </p>
 
-    <figure class="post-image-container" data-pagefind-ignore>
-      <img src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-image-cover">
+    <figure class="post-image-container">
+      <Image src={frontmatter.image.src} alt={frontmatter.image.alt} class="post-image-cover" format="avif"  data-pagefind-ignore/>
       <figcaption class="post-image-description">{frontmatter.image.alt}</figcaption>
     </figure>
 
@@ -57,9 +58,14 @@ const { frontmatter } = Astro.props;
     @apply flex flex-col mb-4;
   }
   .post-image-cover {
-    @apply self-center rounded-xl max-w-[80%] max-h-[32rem] flex-shrink-0 object-cover;
+    @apply self-center rounded-xl max-w-[50%] flex-shrink-0 object-cover;
   }
   .post-image-description {
     @apply self-center text-xs mt-2;
+  }
+  @media screen and (max-width: 720px) {
+    .post-image-cover {
+      @apply max-w-[80%];
+    }
   }
 </style>
