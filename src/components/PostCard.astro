@@ -16,11 +16,11 @@ const { href, frontmatter } = Astro.props;
 <article class="post-card relative">
   <a href={href} class="absolute inset-0 z-10" aria-label="Post"></a>
   <Image 
-    src={frontmatter.image.src} 
-    alt={frontmatter.image.alt} 
+    src={frontmatter.image} 
+    alt={frontmatter.alt} 
     class="post-card-image" 
-    widths={[240, 540, 720, frontmatter.image.src.width]}
-    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${frontmatter.image.src.width}px`}
+    widths={[240, 540, 720, frontmatter.image.width]}
+    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${frontmatter.image.width}px`}
     format="avif" 
     quality="mid"
   />

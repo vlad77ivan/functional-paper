@@ -7,10 +7,8 @@ const postsCollectionSchema = (image: ImageFunction) => z.object({
   pubDate: z.date(),
   description: z.string(),
   author: z.string(),
-  image: z.object({
-    src: image(),
-    alt: z.string()
-  }),
+  image: image(),
+  alt: z.string(),
   tags: z.array(z.string())
 });
 
