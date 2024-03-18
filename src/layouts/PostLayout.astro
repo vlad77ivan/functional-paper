@@ -30,15 +30,15 @@ const { frontmatter } = Astro.props;
 
     <figure class="post-image-container">
       <Image 
-        src={frontmatter.image.src} 
-        alt={frontmatter.image.alt} 
+        src={frontmatter.image} 
+        alt={frontmatter.alt} 
         class="post-image-cover" 
-        widths={[240, 540, 720, frontmatter.image.src.width]}
-        sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${frontmatter.image.src.width}px`}
+        widths={[240, 540, 720, frontmatter.image.width]}
+        sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${frontmatter.image.width}px`}
         format="avif" 
         data-pagefind-ignore
       />
-      <figcaption class="post-image-description">{frontmatter.image.alt}</figcaption>
+      <figcaption class="post-image-description">{frontmatter.alt}</figcaption>
     </figure>
 
     <section>
@@ -66,14 +66,14 @@ const { frontmatter } = Astro.props;
     @apply flex flex-col mb-4;
   }
   .post-image-cover {
-    @apply self-center rounded-xl max-w-[50%] flex-shrink-0 object-cover;
+    @apply self-center max-w-[100%] max-h-[36rem] flex-shrink-0 object-contain;
   }
   .post-image-description {
     @apply self-center text-xs mt-2;
   }
   @media screen and (max-width: 720px) {
     .post-image-cover {
-      @apply max-w-[80%];
+      @apply max-w-[100%] max-h-[36rem];
     }
   }
 </style>

@@ -35,14 +35,14 @@ const { src, alt } = Astro.props;
     @apply flex flex-col mb-4;
   }
   .post-image {
-    @apply self-center rounded-xl max-w-[50%] flex-shrink-0 object-cover;
+    @apply self-center max-w-[100%] max-h-[36rem] flex-shrink-0 object-contain;
   }
   .post-image-caption {
     @apply self-center text-xs mt-2;
   }
   @media screen and (max-width: 720px) {
     .post-image {
-      @apply max-w-[80%];
+      @apply max-w-[100%] max-h-[36rem];
     }
   }
 </style>
