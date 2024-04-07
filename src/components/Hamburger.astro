@@ -1,11 +1,11 @@
 ---
 import ThemeToggle from '@components/ThemeToggle.astro';
 ---
-<label class="mobile-menu flex w-12 relative z-40 cursor-pointer" for="mobile-menu">
+<label class="mobile-menu overflow-y-hidden overscroll-y-contain flex w-12 relative z-40 cursor-pointer" for="mobile-menu">
   <input class="peer hidden" type="checkbox" id="mobile-menu" />
   <div class="hamburger"></div>
   <div class="fixed inset-0 z-40 hidden h-full w-full bg-black/50 backdrop-blur-sm peer-checked:block">&nbsp;</div>
-  <div class="fixed top-0 right-0 z-40 h-full w-full translate-x-full touch-none overflow-y-hidden overscroll-y-contain transition duration-100 peer-checked:translate-x-0">
+  <div class="fixed top-0 right-0 z-40 h-full w-full translate-x-full touch-none transition duration-100 peer-checked:translate-x-0">
       <div class="float-right min-h-full w-[40%] bg-custom-white dark:bg-custom-gray px-6 pt-12 shadow-2xl">
         <ul class="hamburger-links">
           <li class="menu-option"><a href="/about/" class="menu-option-link">About</a></li>
@@ -17,24 +17,6 @@ import ThemeToggle from '@components/ThemeToggle.astro';
       </div>
   </div>
 </label>
-
-<script>
-  document.addEventListener('astro:page-load', (_event) => {
-    const mobileMenuCheckbox = document.getElementById('mobile-menu');
-
-    if (mobileMenuCheckbox) {
-      mobileMenuCheckbox.addEventListener('change', function() {
-        const checkbox = this as HTMLInputElement;
-        if (checkbox.checked) {
-            document.body.style.overflowY = 'hidden';
-        } else {
-            document.body.style.overflowY = 'visible';
-        }
-      });
-    }
-  });
-</script>
-  
 
 <style>
   .hamburger {
