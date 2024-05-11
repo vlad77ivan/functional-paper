@@ -49,17 +49,11 @@ const giscusDataCategoryId = import.meta.env.GISCUS_DATA_CATEGORY_ID
     loadGiscus(theme);
   });
 
-  function updateGiscusTheme(theme) {
-    // Assuming the container's ID is "giscus-container"
-    const container = document.getElementById('giscus-container');
-    if (container) {
-      container.innerHTML = ''; // Clear the container
-      loadGiscus(theme); // Reload Giscus with the new theme
-    }
-  }
-
+  // Change Giscus theme when user clicks the theme toggle
   window.addEventListener('themeChanged', (event) => {
     const newTheme = event.detail.theme;
-    updateGiscusTheme(newTheme); // Update Giscus with the new theme
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: newTheme } } }, 'https://giscus.app');
   });
 </script>
