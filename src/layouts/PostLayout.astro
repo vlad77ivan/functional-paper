@@ -5,6 +5,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Author from "@components/Author.astro";
 import Comments from "@components/Comments.astro"
 import TagCard from "@components/TagCard.astro";
+import { formatDate } from "@utils/date.ts";
+import { getImageWidths, getImageSizes } from "@utils/image.ts";
 
 interface Props {
   frontmatter: Post;
@@ -22,20 +24,20 @@ const { frontmatter } = Astro.props;
   <article data-pagefind-body>
     <h1 class="post-title">{frontmatter.title}</h1>
     <p class="post-date-author">
-      {frontmatter.pubDate.toUTCString().slice(5,16)} | <Author name={frontmatter.author} />
+      {formatDate(frontmatter.pubDate)} | <Author name={frontmatter.author} />
     </p>
     <p class="post-description">
       {frontmatter.description}
     </p>
 
     <figure class="post-image-container">
-      <Image 
-        src={frontmatter.image} 
-        alt={frontmatter.alt} 
-        class="post-image-cover" 
-        widths={[240, 540, 720, frontmatter.image.width]}
-        sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${frontmatter.image.width}px`}
-        format="avif" 
+      <Image
+        src={frontmatter.image}
+        alt={frontmatter.alt}
+        class="post-image-cover"
+        widths={getImageWidths(frontmatter.image.width)}
+        sizes={getImageSizes(frontmatter.image.width)}
+        format="avif"
         data-pagefind-ignore
       />
       <figcaption class="post-image-description">{frontmatter.alt}</figcaption>
@@ -50,14 +52,15 @@ const { frontmatter } = Astro.props;
 </BaseLayout>
 
 <style>
+  @reference "../styles/global.css";
   .post-tags {
     @apply flex flex-wrap;
   }
   .post-title {
-    @apply tracking-tighter font-semibold text-4xl mt-1;
+    @apply font-bold text-4xl mt-1;
   }
   .post-date-author {
-    @apply font-thin mt-1;
+    @apply font-extralight mt-1;
   }
   .post-description {
     @apply my-4;
@@ -66,7 +69,7 @@ const { frontmatter } = Astro.props;
     @apply flex flex-col mb-4;
   }
   .post-image-cover {
-    @apply self-center max-w-[100%] max-h-[36rem] flex-shrink-0 object-contain;
+    @apply self-center max-w-[100%] max-h-[36rem] shrink-0 object-contain;
   }
   .post-image-description {
     @apply self-center text-xs mt-2;

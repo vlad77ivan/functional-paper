@@ -1,10 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import 'inter-ui/inter.css';
+
+@plugin "@tailwindcss/typography";
+
+/* Class-based dark mode (replaces darkMode: 'class' in tailwind.config) */
+@variant dark (&:where(.dark, .dark *));
+
+/* Custom theme (replaces theme.extend in tailwind.config) */
+@theme {
+  --color-custom-gray: #0d1117;
+  --color-custom-white: #f6f8fa;
+  --color-custom-accent: #55d699;
+  --color-custom-accent-2: #fbbd04;
+  --color-custom-accent-3: #2f81f7;
+
+  --font-sans: "Inter var", "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 
 @layer base {
   body {
-    @apply font-mono text-sm tracking-tight antialiased mx-auto max-w-5xl p-4 leading-normal bg-custom-white dark:bg-custom-gray dark:text-white;
+    @apply font-sans text-base antialiased mx-auto max-w-5xl p-4 leading-normal bg-custom-white dark:bg-custom-gray dark:text-custom-white;
   }
   html {
     margin-left: calc(100vw - 100%);
@@ -15,4 +31,37 @@
   .under-hover {
     @apply border-y border-y-transparent border-b-black dark:border-b-white hover:text-custom-accent-3 hover:border-b-custom-accent-3 dark:hover:border-b-custom-accent-3 hover:transition-all hover:duration-100;
   }
+}
+
+/* Prose overrides (replaces typography config in tailwind.config) */
+.prose {
+  max-width: none;
+}
+
+.prose a:hover {
+  color: var(--color-custom-accent-3);
+}
+
+.prose figcaption {
+  color: var(--color-custom-gray);
+}
+
+/* Dark mode prose — prose-invert handles base inversion,
+   these overrides apply the site's custom palette */
+.dark .prose {
+  --tw-prose-body: var(--color-custom-white);
+  --tw-prose-headings: #ffffff;
+  --tw-prose-bold: var(--color-custom-white);
+  --tw-prose-links: var(--color-custom-white);
+  --tw-prose-quotes: var(--color-custom-white);
+  --tw-prose-code: var(--color-custom-white);
+  --tw-prose-pre-code: var(--color-custom-white);
+}
+
+.dark .prose figcaption {
+  color: var(--color-custom-white);
+}
+
+.dark .prose a:hover {
+  color: var(--color-custom-accent-3);
 }

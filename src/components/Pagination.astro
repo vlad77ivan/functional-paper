@@ -1,15 +1,12 @@
 ---
 interface Props {
   length: number;
-  currentUrl?: string; // Optional
   currentPage: number;
-  firstUrl?: string; // Optional
-  prevUrl: string | any;
-  nextUrl: string | any;
-  lastUrl?: string; // Optional
+  prevUrl: string | undefined;
+  nextUrl: string | undefined;
 }
 
-const { length, currentPage, prevUrl, nextUrl} = Astro.props;
+const { length, currentPage, prevUrl, nextUrl } = Astro.props;
 ---
 <nav class="pagination-container">
   <div class="pagination-previous">
@@ -26,6 +23,7 @@ const { length, currentPage, prevUrl, nextUrl} = Astro.props;
 </nav>
 
 <style>
+  @reference "../styles/global.css";
   .pagination-container {
     @apply flex items-center justify-center gap-x-6 mt-4;
   }

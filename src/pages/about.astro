@@ -5,20 +5,20 @@ import profileImage from '@images/capy.png';
 ---
 <BaseLayout title="About">
   <article class="about-container" aria-label="About me">
-    <div class="size-[30%] overflow-hidden rounded-full flex-shrink-0 float-right">
-      <Image 
-        src={profileImage} 
-        alt="Pofile photo" 
-        class="object-cover w-full h-full" 
+    <div class="size-[30%] overflow-hidden rounded-full shrink-0 float-right">
+      <Image
+        src={profileImage}
+        alt="Pofile photo"
+        class="object-cover w-full h-full"
         widths={[240, 540, 720, profileImage.width]}
         sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${profileImage.width}px`}
-        format="avif" 
+        format="avif"
         quality="mid"
       />
     </div>
     <h1 class="mb-4 text-2xl">Hello, visitor!</h1>
     <p>
-      I'm Vlad and you are on the Demo for the 
+      I'm Vlad and you are on the Demo for the
       <a href="https://github.com/vlad77ivan/functional-paper" class="under-hover">
       Functional Paper</a> theme for Astro.
     </p>
@@ -30,6 +30,7 @@ import profileImage from '@images/capy.png';
 </BaseLayout>
 
 <style>
+  @reference "../styles/global.css";
   .about-container {
     @apply container mx-auto;
   }
