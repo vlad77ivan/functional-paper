@@ -1,6 +1,6 @@
 ---
 import '@styles/global.css';
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 
@@ -22,7 +22,7 @@ const { title=(import.meta.env.SITE_TITLE + import.meta.env.SITE_TITLE_SECONDARY
     <meta name="description" content={description}>
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class="flex flex-col h-screen">
     <Header />

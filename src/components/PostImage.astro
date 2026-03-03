@@ -31,11 +31,12 @@ const { src, alt } = Astro.props;
 </figure>
 
 <style>
+  @reference "../styles/global.css";
   .figure-container {
     @apply flex flex-col mb-4;
   }
   .post-image {
-    @apply self-center max-w-[100%] max-h-[36rem] flex-shrink-0 object-contain;
+    @apply self-center max-w-[100%] max-h-[36rem] shrink-0 object-contain;
   }
   .post-image-caption {
     @apply self-center text-xs mt-2;
